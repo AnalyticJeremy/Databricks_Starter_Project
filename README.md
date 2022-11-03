@@ -4,11 +4,17 @@ This is a starter project for anyone who want to get started using Azure Databri
 own [lakehouse](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/).  This should familiarize you with basic concepts of the lakehouse and
 give you some practice using tools in Azure.
 
-For this project, we will be using the [NYC Taxi data](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page). (explain and provide rationale)
+For this project, we will be using the [NYC Taxi data](https://www1.nyc.gov/site/tlc/about/tlc-trip-record-data.page). This is an open dataset provided
+by the New York City Taxi & Limousine.  It contains a record of every taxi and ride-sharing ride taken in New York city since 2009.  We often use this
+dataset in training activities because it has several nice features:
+   1. it's free
+   2. it's easy to understand because we all know what a taxi ride is
+   3. it's real-world data so it's not perfectly clean or standardized
+   4. it's a large dataset so we get experience working with many rows of data
 
-You will be building a simple version of the lakehouse architecture.  This includes creating bronze, silver, and gold layers so you will want to be sure
-you are familiar with the [Databricks medallion architecture](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion) to understand what
-these terms mean.
+This project guides you through the creation of a simple version of the lakehouse architecture.  This includes creating bronze, silver,
+and gold layers so you will want to be sure you are familiar with the
+[Databricks medallion architecture](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion) to understand what these terms mean.
 
 ## Step 0 - Set Up Your Environment
 
