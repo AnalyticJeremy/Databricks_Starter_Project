@@ -12,7 +12,9 @@ these terms mean.
 
 ## Step 0 - Set Up Your Environment
 
-We'll begin by preparing an Azure environment in which you can complete this project.
+We'll begin by preparing an Azure environment in which you can complete this project.  Note that you will be creating two Azure resources
+(an Azure Databricks workspace and a Storage Account).  When creating a environment in Azure, it is best practice to create all of the resources
+for that environment in the *same region*.  For this project, I would prefer that you select East US 2.
 
 1. Provision an Azure subscription (if you do not already have one)
 1. Create a new resource group for this project.  You may name it whatever you want, but something like `rg_databricks_starter` will help you keep track of it.
@@ -25,6 +27,12 @@ We'll begin by preparing an Azure environment in which you can complete this pro
    1. *or* if you prefer to use Azure DevOps, you can create a repo in that service instead.
 1. In Databricks, configure your git credentials and then connect to your repo.  All of the notebooks you create in this project should be created in the repo.
 1. Mount the two containers from your ADLS Gen 2 storage account on the DBFS.
+
+#### Discussion Questions for Step 0
+1. Why is it important to create the resources in the same region?  Does this affect cost, performance, or both?
+1. Why did we put both of our resources in the same resource group?
+1. When you mounted your storage account on the DBFS, which authentication method did you use?  What are the advantages and disadvantages
+of this method compared to other methods?
 
 ## Step 1 - Get the Raw Data
 
