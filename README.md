@@ -25,7 +25,7 @@ for that environment in the *same region*.  For this project, I would prefer tha
 1. Provision an Azure subscription (if you do not already have one)
 1. Create a new resource group for this project.  You may name it whatever you want, but something like `rg_databricks_starter` will help you keep track of it.
 1. Create a new Azure Databricks workspace in your resource group.
-1. Create a new ADLS Gen 2 storage account in your resource gorup.
+1. Create a new ADLS Gen 2 storage account in your resource group. (***NOTE:*** Be _sure_ that you [create an ADLS Gen 2 storage account](https://learn.microsoft.com/en-us/azure/storage/blobs/create-data-lake-storage-account) and not just a plain blob storage account.
    1. Add a new container to hold your raw data.
    1. Add a second container to hold your bronze data.
 1. Create a git repo where you can store your work.  This will allow you to share your work with me and give you practice working in a source-controlled Databricks environment.
@@ -44,11 +44,35 @@ of this method compared to other methods?
 
 I will provide you with a SAS key and account name so you can copy this data.  You do *not* need to write a script to scrape the data from the NYC Taxi website.
 
-*detailed steps to be written*
+In this step, you will need to copy the raw data files from my storage account to the raw container in your storage account.
+This will give you experience with moving large volumes of data in Azure.  It will also make your project self-contained and
+not reliant on my Azure subscription.
+
+There are many different ways that you can copy the data.  Feel free to select any method that you want.  Options include:
+ - using the Azure Storage Explorer application
+ - using the `azcopy` command line utility
+ - writing Spark code in Databricks to iterate over the files and copy them
+
+(*Hint*:  Using Azure Storage Explorer will be the easiest and fastest way to do it.)
+
+#### Discussion Questions for Step 1
+1. What tools did you use to copy the data?  Why did you choose those tools?
+1. How much data did you copy?
+1. How much does it cost you to store that volume of data?
 
 ## Step 2 - Ingest Raw Data to Bronze Layer
 
-*detailed steps to be written*
+The raw data that you copied is in parquet files.  However, these files were created at different points in time.  They do not all have
+the same schema.  (That is to say that the schema for the data evolves over time.)
+
+For our bronze data, we want to convert the data into a format that will be easier to use, and we want to combine all of the data into
+a single, unified Delta table.  However, since this is the bronze layer, we do not need to apply extensive data cleansing at this time.
+
+When you write the data to your bronze layer, you will want to partition the data.  Read about big data partitioning and think about which column(s)
+you will want to use to partition the data.
+
+Since the raw data has a variety of schemas, the files must be read in one at a time.  This requires some slightly advanced coding.  Therefore, I
+will provide you with a code template to get you started.
 
 ## Step 3 - Clean Data in Bronze Layer and Write to Silver Layer
 
