@@ -80,7 +80,32 @@ The raw data that you copied is in parquet files.  However, these files were cre
 the same schema.  (That is to say that the schema for the data evolves over time.) 
 
 Since the raw data has a variety of schemas, the files must be read in one at a time.  This requires some slightly advanced coding.  Therefore, I
-will provide you with a code template to get you started.
+have written the following script to help you.  Paste this code into a notebook cell in Databricks:
+```python
+path_to_parquet = "/mnt/taxi/parquet-raw"
+
+import pyspark.sql.functions as F
+df = None
+for type in dbutils.fs.ls(path_to_parquet):
+  for file in dbutils.fs.ls(type[0]):
+    file_df = spark.read.parquet(file[0]).withColumn("taxi_type", F.lit(type[1][:-1])).withColumn("source_file", F.input_file_name())
+    if df is None:
+      df = file_df
+    else:
+      df = df.unionByName(file_df, allowMissingColumns=True)
+      
+print(df)
+```
+
+This code will take 5 &mdash; 10 minutes to run.  When it completes, you will have a Spark dataframe referenced in a variable called `df`.
+You can then apply partitioning to the dataframe and write it to your Bronze Layer as a Delta table.  (There are plenty of examples
+online that show how you can do this.)
+
+#### Discussion Questions for Step 2
+1. What column(s) did you choose to partition on?  What factors did you consider in making your choice?
+1. How long did it take to write the Delta files?  What could you do to make this process faster?
+1. Review the names of the columns in the dataframe.  Do you see anything that will need to be cleaned up later in the Silver Layer?
+
 
 ## Step 3 - Clean Data in Bronze Layer and Write to Silver Layer
 
