@@ -16,6 +16,10 @@ This project guides you through the creation of a simple version of the lakehous
 and gold layers so you will want to be sure you are familiar with the
 [Databricks medallion architecture](https://learn.microsoft.com/en-us/azure/databricks/lakehouse/medallion) to understand what these terms mean.
 
+You will copy the raw data into your environment and then use Databricks to apply several rounds of data cleaning and enrichment.
+This will give you practical experience creating multiple datasets in a lakehouse environment and demonstrating how the data progresses
+through the various layers of preparation.
+
 ## Step 0 - Set Up Your Environment
 
 We'll begin by preparing an Azure environment in which you can complete this project.  Note that you will be creating two Azure resources
@@ -59,17 +63,21 @@ There are many different ways that you can copy the data.  Feel free to select a
 1. What tools did you use to copy the data?  Why did you choose those tools?
 1. How much data did you copy?
 1. How much does it cost you to store that volume of data?
+1. For this exercise, you performed a one-time move of the data.  In the real world, these processes would be automated so fresh, raw data
+can be continually ingested.  What are some tools you might use for this?
 
 ## Step 2 - Ingest Raw Data to Bronze Layer
 
-The raw data that you copied is in parquet files.  However, these files were created at different points in time.  They do not all have
-the same schema.  (That is to say that the schema for the data evolves over time.)
-
-For our bronze data, we want to convert the data into a format that will be easier to use, and we want to combine all of the data into
-a single, unified Delta table.  However, since this is the bronze layer, we do not need to apply extensive data cleansing at this time.
+Now that you have the raw data stored in your lakehouse, you will want to begin the process of cleaning it so that it can be used more easily
+for analysis.  For our first step, we will create the Bronze Layer of our lakehouse.  In this step, we will simply transform the data
+from individual parquet files into a single [Delta Lake](https://learn.microsoft.com/en-us/azure/databricks/delta/) table.  We will not need
+to apply any additional cleansing at this time.  We are simply copying the data from parquet to Delta.
 
 When you write the data to your bronze layer, you will want to partition the data.  Read about big data partitioning and think about which column(s)
 you will want to use to partition the data.
+
+The raw data that you copied is in parquet files.  However, these files were created at different points in time.  They do not all have
+the same schema.  (That is to say that the schema for the data evolves over time.) 
 
 Since the raw data has a variety of schemas, the files must be read in one at a time.  This requires some slightly advanced coding.  Therefore, I
 will provide you with a code template to get you started.
